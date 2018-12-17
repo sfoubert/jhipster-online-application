@@ -4,6 +4,7 @@ import fr.ippon.jhipster.application.JhipsterOnlineApplicationApp;
 
 import fr.ippon.jhipster.application.domain.Car;
 import fr.ippon.jhipster.application.repository.CarRepository;
+import fr.ippon.jhipster.application.service.mapper.DocumentMapper;
 import fr.ippon.jhipster.application.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -61,6 +62,9 @@ public class CarResourceIntTest {
     @Autowired
     private Validator validator;
 
+    @Autowired
+    private DocumentMapper documentMapper;
+
     private MockMvc restCarMockMvc;
 
     private Car car;
@@ -68,7 +72,7 @@ public class CarResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CarResource carResource = new CarResource(carRepository);
+        final CarResource carResource = new CarResource(carRepository, documentMapper);
         this.restCarMockMvc = MockMvcBuilders.standaloneSetup(carResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
